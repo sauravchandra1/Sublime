@@ -2,7 +2,7 @@
 using namespace std;
 #define MOD 1000000007
 #define N 55
-long long n, s;
+long long num, s;
 vector<long long> pos, inv(N + 10), fact(N + 10);
 void cal_fact() {
 	fact[0] = 1;
@@ -37,18 +37,26 @@ int main() {
 	cin >> t;
 	while (t--) {
 		pos.clear();
-		cin >> n >> s;
+		cin >> num >> s;
 		int x, k = 0;
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < num; i++) {
 			cin >> x;
 			if (x == -1) 
 				k = k + 1;
 			else
 				pos.push_back(x);
 		}
+		if (num == 1) {
+			cout << "0" << endl;
+			continue;
+		}
 		long long sum = 0;
 		for (int i = 0; i < (int)pos.size(); i++) 
 			sum += pos[i];
+		if (k == 0 && sum != s) {
+			cout << "0" << endl;
+			continue;
+		}
 		sum = s - sum;
 		if (sum < k) {
 			cout << "0" << endl;
@@ -83,8 +91,9 @@ int main() {
 		else 
 	 		tot_sq = nCr(n, r);
 		pos_ans = (pos_ans % MOD * tot_sq % MOD) % MOD;
-		long long col_ans = 0, occurrence;
+		long long col_ans = 0, occurrence, tmp;
 		for (long long i = 1; i <= sum - (k - 1); i++) {
+			tmp = 0;
 			n = sum - i - 1;
 			r = k - 2;
 			if (n <= 0 || r <= 0) 
@@ -93,9 +102,10 @@ int main() {
 				occurrence = nCr(sum - i - 1, k - 2);
 			for (int j = 0; j < (int)pos.size(); j++) {
 				hcf = __gcd(i, pos[j]);
-				col_ans = (col_ans % MOD + hcf % MOD) % MOD;
+				tmp = (tmp % MOD + hcf % MOD) % MOD;
 			}
-			col_ans = (col_ans % MOD * occurrence % MOD) % MOD;
+			tmp = (tmp % MOD * occurrence % MOD) % MOD;
+			col_ans = (col_ans % MOD + tmp % MOD) % MOD;
 		}
 		col_ans = (col_ans % MOD * k % MOD) % MOD;
 		long long neg_ans = 0;
@@ -122,7 +132,7 @@ int main() {
 			}
 		}
 		if (k >= 2)
-			neg_ans = (neg_ans % MOD * ((k * (k - 1)) / 2LL) % MOD) % MOD;
+			neg_ans = (neg_ans % MOD * ((k * (k - 1LL)) / 2LL) % MOD) % MOD;
 		long long ans = (pos_ans % MOD + col_ans % MOD + neg_ans % MOD) % MOD;
 		cout << ans << endl;
 	}
