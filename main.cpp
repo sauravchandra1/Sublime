@@ -1,64 +1,45 @@
-#include<bits/stdc++.h>
-
-const int N = 100010;
-const int M = 210;
-const int moder = 998244353;
-
-void add(int &a, int b){
-    a += b;
-    a -= a >= moder ? moder : 0;
-}
-
-void sub(int &a, int b){
-    a -= b;
-    a += a < 0 ? moder : 0;
-}
-
-int dp[N][M][2], pre[N][M][2], a[N];
-
-int main(){
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+#include <bits/stdc++.h>
+using namespace std;
+#define N 100005
+#define A 200
+#define MOD 998244353
+long long dp[N + 10][A + 10][2];
+int main() {
     int n;
-    scanf("%d", &n);
-    for (int i = 1; i <= n; ++ i){
-        scanf("%d", &a[i]);
+    cin >> n;
+    long long arr[N + 10];
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+    if (arr[0] == -1) 
+    	for (int i = 1; i <= A; i++)
+    		dp[0][i][1] = 1;
+    else
+    	dp[0][arr[0]][1] = 1;
+    for (int i = 1; i < n; i++) {
+    	if (arr[i] == -1) {
+    		for (int j = 2; j <= A; j++)
+    			dp[i][j][0] = (dp[i][j][0] % MOD + dp[i][j - 1]
+    						dp[i - 1][j][0] % MOD + dp[i - 1][j][1] % MOD) % MOD;
+    		dp[i][1][1] = dp[i - 1][1][1];
+    		for (int j = 2; j <= A; j++) 
+    			dp[i][j][1] = (dp[i][j][1] % MOD + dp[i - 1][j][1] % MOD) % MOD;
+    	}
+    	else {
+    		int a = arr[i];
+    		for (int j = 1; j <= a - 1; j++) 
+    			dp[i][a][0] = (dp[i][a][0] % MOD + 
+    						dp[i - 1][j][0] % MOD + dp[i - 1][j][1] % MOD) % MOD;
+    		dp[i][a][1] = dp[i - 1][a][0];
+    		for (int j = a; j <= A; j++) 
+    			dp[i][a][1] = (dp[i][a][1] % MOD + dp[i - 1][j][1] % MOD) % MOD;
+  	  	}
     }
-    if (a[1] == -1){
-        for (int i = 1; i <= 200; ++ i){
-            dp[1][i][0] = 1;
-        }
-    }
-    else{
-        dp[1][a[1]][0] = 1;
-    }
-    for (int i = 0; i < 2; ++ i){
-        for (int j = 1; j < M; ++ j){
-            pre[1][j][i] = pre[1][j - 1][i];
-            add(pre[1][j][i], dp[1][j][i]);
-        }
-    }
-    for (int i = 2; i <= n; ++ i){
-        int left = a[i] == -1 ? 1 : a[i];
-        int right = a[i] == -1 ? 200 : a[i];
-        for (int j = left; j <= right; ++ j){
-            add(dp[i][j][0], pre[i - 1][j - 1][0]);
-            add(dp[i][j][0], pre[i - 1][j - 1][1]);
-            add(dp[i][j][1], dp[i - 1][j][0]);
-            add(dp[i][j][1], pre[i - 1][M - 1][1]);
-            sub(dp[i][j][1], pre[i - 1][j - 1][1]);
-        }
-        for (int j = 0; j < 2; ++ j){
-            for (int k = 1; k < M; ++ k){
-                pre[i][k][j] = pre[i][k - 1][j];
-                add(pre[i][k][j], dp[i][k][j]);
-            }
-        }
-    }
-    int ans = 0;
-    for (int i = 1; i < M; ++ i){
-        add(ans, dp[n][i][1]);
-    }
-    printf("%d\n", ans);
+    long long ans = 0;
+   	if (arr[n - 1] == -1) 
+   		for (int i = 1; i <= A; i++)
+   			ans = (ans % MOD + dp[n - 1][i][1] % MOD);
+   	else
+   		ans = dp[n - 1][arr[n - 1]][1];
+   	cout << ans << endl;
     return 0;
 }
