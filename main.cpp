@@ -1,88 +1,48 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-#define N 55
+
 #define MOD 1000000007
-int n, s;
-long long dp[N][N];
-long long gcdAns[N][N];
-long long numberCount[N][N][N];
-vector<int> vec;
-void pre() {
-	for (int balls = 0; balls < N; balls++) {
-		dp[1][balls] = 1;
-		numberCount[1][balls][balls] = 1;
-	}
-	for (int box = 2; box < N; box++) {
-		for (int balls = box; balls < N; balls++) {
-			for (int lastBoxNumber = 1; lastBoxNumber <= (balls - (box - 1)); lastBoxNumber++) {
-				dp[box][balls] = (dp[box][balls] + dp[box - 1][balls - lastBoxNumber]) % MOD;
-				gcdAns[box][balls] = (gcdAns[box][balls] + gcdAns[box - 1][balls - lastBoxNumber]) % MOD;
-				for (int numberCountSoFar = 1; numberCountSoFar < N; numberCountSoFar++) {
-					gcdAns[box][balls] = (gcdAns[box][balls] + (__gcd(numberCountSoFar, lastBoxNumber) 
-					* numberCount[box - 1][balls - lastBoxNumber][numberCountSoFar]) % MOD) % MOD;
-				}
-				for (int countSoFar = 1; countSoFar < N; countSoFar++) {
-					numberCount[box][balls][countSoFar] += numberCount[box - 1][balls - lastBoxNumber][countSoFar]; 
-				}
-				numberCount[box][balls][lastBoxNumber] += dp[box - 1][balls - lastBoxNumber];			
-			}
-		}
-	}
+#define MOD1 1000000009
+
+long long gcd(long long a, long long b) {
+    if (b == 0LL)
+        return a;
+    else 
+        return gcd(b, a % b);
 }
+
+long long power(long long x, long long y, long long m) 
+{ 
+    if (y == 0LL) 
+        return 1LL; 
+    long long p = power(x, y / 2LL, m) % m; 
+    p = (p * p) % m; 
+    return (y % 2LL == 0)? p : (x * p) % m; 
+} 
+
 int main() {
-	pre();
-	int t;
-	cin >> t;
-	while (t--) {
-		vec.clear();
-		cin >> n >> s;
-		int inputVariable, negativeCount = 0, sum = 0;
-		for (int i = 0; i < n; i++) {
-			cin >> inputVariable;
-			if (inputVariable < 0)
-				negativeCount++;
-			else { 
-				sum += inputVariable;
-				vec.push_back(inputVariable);
-			}
-		}
-		if (sum > s || (s - sum) < negativeCount || n == 1 || (negativeCount == 0 && (s != sum))) {
-			cout << "0" << endl;
-			continue;
-		}
-		int vecSize;
-		long long ans = 0;
-		if (negativeCount == 1) {
-			vec.push_back(s - sum);
-			vecSize = vec.size();
-			for (int i = 0; i < vecSize; i++) {
-				for (int j = i + 1; j < vecSize; j++) {
-					ans = (ans + __gcd(vec[i], vec[j])) % MOD;
-				}
-			}
-			cout << ans << endl;
-			continue;
-		}
-		vecSize = vec.size();
-		for (int i = 0; i < vecSize; i++) {
-			for (int j = i + 1; j < vecSize; j++) {
-				ans = (ans + __gcd(vec[i], vec[j])) % MOD;
-			}
-		}
-		if (negativeCount == 0) {
-			cout << ans << endl;
-			continue;
-		}
-		ans = (ans * dp[negativeCount][s - sum]) % MOD;
-		ans = (ans + gcdAns[negativeCount][s - sum]) % MOD;
-		for (int i = 0; i < vecSize; i++) {
-			for (int j = 1; j < N; j++) {
-				ans = (ans + __gcd(vec[i], j) * numberCount[negativeCount][s - sum][j]) % MOD;
-			}
-		}
-		cout << ans << endl;
-	}
-	return 0;
+    int t;
+    cin >> t;
+    while (t--) {
+        long long n;
+        cin >> n;
+        if (n == 1LL) {
+            cout << "0 0" << endl;
+            continue;
+        }
+        long long nume1 = (((2LL * (n % MOD) - 3LL + MOD) % MOD) * 2LL) % MOD;
+        long long dino1 = (((n % MOD - 1LL + MOD) % MOD) * (n % MOD)) % MOD;
+        long long nume2 = (((2LL * (n % MOD1) - 3LL + MOD1) % MOD1) * 2LL) % MOD1;
+        long long dino2 = (((n % MOD1 - 1LL + MOD1) % MOD1) * (n % MOD1)) % MOD1;
+        long long hcf1 = (nume1 >= dino1 ? gcd(nume1, dino1) : gcd(dino1, nume1));
+        long long hcf2 = (nume2 >= dino2 ? gcd(nume2, dino2) : gcd(dino2, nume2));
+        nume1 /= hcf1, dino1 /= hcf1;
+        nume2 /= hcf2, dino2 /= hcf2;
+        long long nume11 = power(nume1, MOD - 2LL, MOD);
+        long long nume22 = power(nume2, MOD1 - 2LL, MOD1);
+        long long ans1 = (nume11 * dino1) % MOD;
+        long long ans2 = (nume22 * dino2) % MOD1;
+        cout << ans1 << " " << ans2 << endl;
+    }
+    return 0;
 }
