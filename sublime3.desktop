@@ -1,0 +1,21 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+StartupNotify=true
+Name=Sublime Text 3
+Name[en_US]=Sublime Text 3
+GenericName=Text Editor
+GenericName[en_US]=Text Editor
+Comment=Edit text files
+Comment[en_US]=Edit text files
+Exec=/usr/bin/sublime3 %U
+Icon=/home/sauravchandra1/sublime_text_3/Icon/48x48/sublime-text.png
+Categories=Development;TextEditor;
+MimeType=text/plain;
+Actions=Window;
+
+[Desktop Action Window]
+Name=Open a New Window
+Name[en_US]=Open a New Window
+Exec=/usr/bin/sublime3 --new-window %U
+OnlyShowIn=Unity;

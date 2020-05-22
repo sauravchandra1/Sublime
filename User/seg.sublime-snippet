@@ -1,0 +1,88 @@
+<snippet>
+	<content><![CDATA[
+class SegmentTree {
+public:
+    int n;
+    vector<int> tree;
+    vector<int> lazy;
+    SegmentTree(int N) : tree(4 * N, 0), lazy(4 * N, 0) {
+        n = N;
+    }
+    void build(vector<int> &arr) {
+        build(arr, 0, n - 1, 0);
+    }
+    void build(vector<int> &arr, int l, int r, int pos) {
+        if (l > r) {
+            return;
+        }
+        if (l == r) {
+            tree[pos] = arr[l];
+        }
+        else {
+            int mid = l + (r - l) / 2;
+            build(arr, l, mid, 2 * pos + 1);
+            build(arr, mid + 1, r, 2 * pos + 2);
+            tree[pos] = max(tree[2 * pos + 1], tree[2 * pos + 2]);
+        }
+    }
+    void update(int L, int R, int newVal) {
+        update(L, R, newVal, 0, n - 1, 0);
+    }
+    void update(int L, int R, int newVal, int l, int r, int pos) {
+        if (lazy[pos] != 0) {
+            if (l != r) {
+                lazy[2 * pos + 1] = lazy[pos];
+                lazy[2 * pos + 2] = lazy[pos];
+            }
+            tree[pos] = lazy[pos];
+            lazy[pos] = 0;
+        }
+        if (R < l || r < L) {
+            return;
+        }
+        if (L <= l && r <= R) {
+            tree[pos] = newVal;
+            if (l != r) {
+                lazy[2 * pos + 1] = newVal;
+                lazy[2 * pos + 2] = newVal;
+            }
+            return;
+        }
+        int mid = l + (r - l) / 2;
+        update(L, R, newVal, l, mid, 2 * pos + 1);
+        update(L, R, newVal, mid + 1, r, 2 * pos + 2);
+        tree[pos] = max(tree[2 * pos + 1], tree[2 * pos + 2]);
+    }
+    int query(int L, int R) {
+        return query(L, R, 0, n - 1, 0);
+    }
+    int query(int L, int R, int l, int r, int pos) {
+        if (lazy[pos] != 0) {
+            if (l != r) {
+                lazy[2 * pos + 1] = lazy[pos];
+                lazy[2 * pos + 2] = lazy[pos];
+            }
+            tree[pos] = lazy[pos];
+            lazy[pos] = 0;
+        }
+        if (R < l || r < L) {
+            return INT_MIN;
+        }
+        if (L <= l && r <= R) {
+            return tree[pos];
+        }
+        else {
+            int mid = l + (r - l) / 2;
+            int leftAns = query(L, R, l, mid, 2 * pos + 1);
+            int rightAns = query(L, R, mid + 1, r, 2 * pos + 2);
+            int ans = max(leftAns, rightAns);
+            return ans;
+        }
+    }
+};
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>seg</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,53 @@
+<snippet>
+	<content><![CDATA[
+#include <iostream>
+#include <ctime>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+using namespace std;
+
+#define TEST_LIM 10
+#define N_LIM 100
+#define VALUE_LIM 100
+
+vector<int> permute(int n) {
+	vector<int> vec(n);
+	iota(begin(vec), end(vec), 1);
+	random_shuffle(vec.begin(), vec.end());
+	return vec; 
+}
+
+void print_vec(vector<int> vec) {
+	int len = vec.size();
+	cout << len << endl;
+	for (auto v : vec) {
+		cout << v << " ";
+	}
+	cout << endl;
+}
+
+int main() {
+	srand(time(NULL));
+	freopen("input.txt", "w", stdout);
+	int test;
+	test = TEST_LIM;
+	cout << test << endl;
+	while (test--) {
+		int n = rand() % N_LIM + 1;
+		cout << n << endl;
+		vector<int> vec;
+		for (int i = 0; i < n; i++) {
+			int val = rand() % VALUE_LIM + 1;
+			vec.push_back(val);
+		}
+		print_vec(vec);
+	}
+	return 0;
+}
+]]></content>
+		<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+		<tabTrigger>tg</tabTrigger>
+		<!-- Optional: Set a scope to limit where the snippet will trigger -->
+		<!-- <scope>source.python</scope> -->
+	</snippet>

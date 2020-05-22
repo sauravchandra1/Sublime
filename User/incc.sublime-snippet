@@ -1,0 +1,51 @@
+<snippet>
+	<content><![CDATA[
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+#include <algorithm>
+#include <bitset>
+#include <map>
+#include <set>
+#include <iomanip> 
+#include <cmath>
+#include <stack>
+#include <cstring>
+#include <climits>
+#include <tuple>
+#include <cstdint>
+using namespace std;
+
+#define FASTIO() ios_base::sync_with_stdio(false); cin.tie(NULL);
+#define endl '\n'
+#define ff first
+#define ss second
+#define pb push_back
+#define mp make_pair
+#define ll long long
+#define int long long
+#define sz(vec) (int)vec.size()
+#define f(i, s, n) for(int i = s; i < n; i++)
+#define all(vec) vec.begin(),vec.end()
+#define LIM 5005
+#define inf 1e18
+
+const ll mod = 998244353;
+const ll modu = 1000000007;
+
+int32_t main() {
+ 	FASTIO();
+	#ifndef ONLINE_JUDGE
+    	freopen("input.txt", "r", stdin);
+    	freopen("output.txt", "w", stdout);
+    #endif
+    ${1:}
+	return 0;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>incc</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

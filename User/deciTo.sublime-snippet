@@ -1,0 +1,24 @@
+<snippet>
+	<content><![CDATA[
+char reVal(int num) { 
+	if (num >= 0 && num <= 9) 
+		return (char)(num + '0'); 
+	else
+		return (char)(num - 10 + 'A'); 
+} 
+
+string deciTo(int base, int inputNum) { 
+	string res;
+	while (inputNum > 0) { 
+		res += reVal(inputNum % base); 
+		inputNum /= base; 
+	}
+	reverse(res.begin(), res.end()); 
+	return res; 
+} 
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>deciTo</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

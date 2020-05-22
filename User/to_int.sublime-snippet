@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+int to_int(string s){
+   int res = 0;
+   for(auto &e : s){
+      res = res * 10 + (e - '0');
+   }
+   return res;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>to_int</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

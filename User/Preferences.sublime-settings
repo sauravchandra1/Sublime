@@ -1,0 +1,11 @@
+{
+	"color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Bright.tmTheme",
+	"font_size": 13,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"scroll_past_end": false,
+	"theme": "Adaptive.sublime-theme",
+	"update_check": false
+}
