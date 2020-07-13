@@ -3,9 +3,7 @@
 int n;
 cin >> n;
 vector<int> vec(n);
-f (i, 0, n) {
-	cin >> vec[i];
-}
+f (i, 0, n) cin >> vec[i];
 ]]></content>
 	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
 	<tabTrigger>rv</tabTrigger>

@@ -1,4 +1,8 @@
 {
+	"added_words":
+	[
+		"txt"
+	],
 	"color_scheme": "Packages/Tomorrow Color Schemes/Tomorrow-Night-Bright.tmTheme",
 	"font_size": 13,
 	"ignored_packages":

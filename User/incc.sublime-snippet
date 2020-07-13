@@ -7,14 +7,19 @@
 #include <algorithm>
 #include <bitset>
 #include <map>
+#include <numeric>
 #include <set>
 #include <iomanip> 
 #include <cmath>
 #include <stack>
 #include <cstring>
 #include <climits>
+#include <functional>
 #include <tuple>
+#include <cassert>
 #include <cstdint>
+#include <chrono>
+#include <random>
 using namespace std;
 
 #define FASTIO() ios_base::sync_with_stdio(false); cin.tie(NULL);
@@ -30,9 +35,16 @@ using namespace std;
 #define all(vec) vec.begin(),vec.end()
 #define LIM 5005
 #define inf 1e18
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 const ll mod = 998244353;
 const ll modu = 1000000007;
+
+#ifndef ONLINE_JUDGE
+#include "/home/sauravchandra1/Documents/debug.cpp"
+#else
+#define debug(...) 42
+#endif
 
 int32_t main() {
  	FASTIO();
