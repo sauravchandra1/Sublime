@@ -3,7 +3,7 @@
 #include <ctime>
 using namespace std;
 
-#define TEST_LIM 10
+#define TEST_LIM 100
 #define N_LIM 100
 #define VALUE_LIM 100
 
